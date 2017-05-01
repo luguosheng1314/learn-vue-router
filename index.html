@@ -3,6 +3,12 @@
 <head>
 	<title>Vue-router 学习</title>
 	<meta charset="utf-8"/>
+	<style type="text/css">
+      a{
+      	text-decoration: underline;
+      	cursor: pointer;
+      }
+	</style>
 	<script type="text/javascript" src="node_modules/vue/dist/vue.min.js"></script>
 	<script type="text/javascript" src="node_modules/vue-router/dist/vue-router.min.js"></script>
 </head>
@@ -22,7 +28,45 @@
      <h2>嵌套路由</h2>
  	 <router-link to="/parent/child">luguosheng</router-link>
  </div>
+ <div>
+     <h2>编程式导航</h2>
+ 	 <a v-on:click="goto('push','/basic')">push to basic</a>
+ 	 <a v-on:click="goto('replace','/basic')">replace to basic</a>
+ 	 <a v-on:click="goto('go',-1)">go back</a>
+ </div>
+  <div>
+     <h2>命名路由</h2>
+ 	<router-link :to="{ name:'basicname' }">router basic named basicname</router-link>
+ </div>
+  <div>
+     <h2>命名视图</h2>
+ 	<router-link to="/namedview">named view</router-link>
+ </div>
+  <div>
+     <h2>重定向和别名</h2>
+ 	<router-link to="/redirect">redirect to basic</router-link>
+ 	<router-link to="/alias">alias for basic</router-link>
+ </div>
+  <div>
+     <h2>元数据</h2>
+ 	<router-link to="/meta">router with the meta</router-link>
+ </div>
+   <div>
+     <h2>过渡动画</h2>
+ 	<router-link to="/meta">router with the meta</router-link>
+ </div>
+  <div>
+     <h2>数据获取</h2>
+ 	<router-link to="/meta">router with the meta</router-link>
+ </div>
+   <div>
+     <h2>滚动行为</h2>
+ </div>
+ <div>
+     <h2>懒加载</h2>
+ </div>
  <router-view></router-view>
+ <router-view name="a"></router-view>
  </div>
 </body>
 <script type="text/javascript">
@@ -33,18 +77,38 @@
     var Nest = {template:'<div>嵌套路由：<router-view></router-view></div>'}
 	var routes=[
 	   {path:'/',component:Welcome}, 
-       {path:'/basic',component:Basic},
+       {path:'/basic',component:Basic,name:'basicname'},
        {path:'/dynamic/:id',component:Dynamic},
        {path:'/dynamic/:part1/:part2',component:DoubleDynamic},
        {path:'/parent',component:Nest,children:[
          {path:'child',component:Basic}
-       ]}
+       ]},
+       {path:'/namedview',components:{
+       	default:Welcome,
+       	a:Basic
+       }},
+       {path:'/redirect',redirect:'/basic'},
+       {alias:'/alias',path:'/basic'},
+       {path:'/meta',meta:{needlogin:true}}
 	]   
 	var router=new  VueRouter({
+		mode:'hash',
 		routes:routes
 	})
 	var app = new Vue({
 		router:router
 	}).$mount('#app')
+	function goto(action,routerName){
+      router[action](routerName)
+	}
+	router.beforeEach(function(to,from,next){
+		console.log(to)
+		console.log(from)
+		next()
+	})
+
+	router.afterEach(function(router){
+      console.log(router)
+	})
 </script>
 </html>
