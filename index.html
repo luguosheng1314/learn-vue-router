@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Vue-router 学习</title>
+	<meta charset="utf-8"/>
+	<script type="text/javascript" src="node_modules/vue/dist/vue.min.js"></script>
+	<script type="text/javascript" src="node_modules/vue-router/dist/vue-router.min.js"></script>
+</head>
+<body>
+ <div id="app">
+ <div>
+     <h2>基本路由</h2>
+ 	 <router-link to="/">home</router-link>
+     <router-link to="/basic">basic</router-link>
+ </div>
+  <div>
+     <h2>动态路由</h2>
+ 	 <router-link to="/dynamic/luguosheng">luguosheng</router-link>
+ 	 <router-link to="/dynamic/luguosheng/bob">luguosheng and bob</router-link>
+ </div>
+ <div>
+     <h2>嵌套路由</h2>
+ 	 <router-link to="/parent/child">luguosheng</router-link>
+ </div>
+ <router-view></router-view>
+ </div>
+</body>
+<script type="text/javascript">
+    var Welcome = {template: '<div>welcome to study vue-router</div>'}
+    var Basic = {template :'<div>I am the basic</div>'}
+    var Dynamic = {template:'<div>Dynamic router for {{$route.params.id}}</div>'}
+    var DoubleDynamic = {template:'<div>Dynamic router for {{$route.params.part1}} and {{$route.params.part2}}</div>'}
+    var Nest = {template:'<div>嵌套路由：<router-view></router-view></div>'}
+	var routes=[
+	   {path:'/',component:Welcome},
+       {path:'/basic',component:Basic},
+       {path:'/dynamic/:id',component:Dynamic},
+       {path:'/dynamic/:part1/:part2',component:DoubleDynamic},
+       {path:'/parent',component:Nest,children:[
+         {path:'child',component:Basic}
+       ]}
+	]
+	var router=new  VueRouter({
+		routes:routes
+	})
+	var app = new Vue({
+		router:router
+	}).$mount('#app')
+</script>
+</html>
