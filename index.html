@@ -32,7 +32,7 @@
     var DoubleDynamic = {template:'<div>Dynamic router for {{$route.params.part1}} and {{$route.params.part2}}</div>'}
     var Nest = {template:'<div>嵌套路由：<router-view></router-view></div>'}
 	var routes=[
-	   {path:'/',component:Welcome},
+	   {path:'/',component:Welcome}, 
        {path:'/basic',component:Basic},
        {path:'/dynamic/:id',component:Dynamic},
        {path:'/dynamic/:part1/:part2',component:DoubleDynamic},
