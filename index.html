@@ -70,27 +70,55 @@
  </div>
 </body>
 <script type="text/javascript">
-    var Welcome = {template: '<div>welcome to study vue-router</div>'}
-    var Basic = {template :'<div>I am the basic</div>'}
-    var Dynamic = {template:'<div>Dynamic router for {{$route.params.id}}</div>'}
-    var DoubleDynamic = {template:'<div>Dynamic router for {{$route.params.part1}} and {{$route.params.part2}}</div>'}
-    var Nest = {template:'<div>嵌套路由：<router-view></router-view></div>'}
+  var Welcome = {template: '<div>welcome to study vue-router</div>'}
+  var Basic = {template :'<div>I am the basic</div>'}
+  var Dynamic = {template:'<div>Dynamic router for {{$route.params.id}}</div>'}
+  var DoubleDynamic = {template:'<div>Dynamic router for {{$route.params.part1}} and {{$route.params.part2}}</div>'}
+  var Nest = {template:'<div>嵌套路由：<router-view></router-view></div>'}
+
+
 	var routes=[
-	   {path:'/',component:Welcome}, 
-       {path:'/basic',component:Basic,name:'basicname'},
-       {path:'/dynamic/:id',component:Dynamic},
-       {path:'/dynamic/:part1/:part2',component:DoubleDynamic},
-       {path:'/parent',component:Nest,children:[
-         {path:'child',component:Basic}
-       ]},
-       {path:'/namedview',components:{
-       	default:Welcome,
-       	a:Basic
-       }},
-       {path:'/redirect',redirect:'/basic'},
-       {alias:'/alias',path:'/basic'},
-       {path:'/meta',meta:{needlogin:true}}
+	   {
+      path:'/',
+      component:Welcome
+    }, 
+     {
+      path:'/basic',
+      component:Basic,
+      name:'basicname'
+    },
+     {
+      path:'/dynamic/:id',
+      component:Dynamic
+    },
+     {path:'/dynamic/:part1/:part2',
+     component:DoubleDynamic
+   },
+   {
+    path:'/parent',
+    component:Nest,
+    children:[
+      {path:'child',component:Basic}
+    ]},
+    {path:'/namedview',components:{
+     	default:Welcome,
+     	a:Basic
+    }},
+    {
+      path:'/redirect',
+      redirect:'/basic'
+    },
+    {
+     alias:'/alias',
+     path:'/basic'
+   },
+   {
+    path:'/meta',
+    meta:{needlogin:true}
+   }
 	]   
+
+
 	var router=new  VueRouter({
 		mode:'hash',
 		routes:routes
@@ -99,8 +127,10 @@
 		router:router
 	}).$mount('#app')
 	function goto(action,routerName){
-      router[action](routerName)
+    router[action](routerName)
 	}
+
+  
 	router.beforeEach(function(to,from,next){
 		console.log(to)
 		console.log(from)
